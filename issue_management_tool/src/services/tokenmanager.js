@@ -1,8 +1,10 @@
 const TokenManager={
-    setToken: function (){
-
+    setToken: function (token){
+        this.token= token;
     },
-    getToken: function(){}
+    getToken: function(){
+        return this.token;
+    }
 
 }
 export default TokenManager;
