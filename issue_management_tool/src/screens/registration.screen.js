@@ -1,5 +1,5 @@
 import React from 'react';
-import {Authentication} from '../services';
+import { Authentication, API_BOOK } from '../services';
 const Registration = function () {
     const typeOfUsers = { USER: 'user', TECHNICIAN: 'technician' };
     const [state, setState] = React.useState({
@@ -57,50 +57,67 @@ const Registration = function () {
         }
 
     }
-    const register= () => {
-        const obj={
+    const register = () => {
+        const obj = {
             username: state.username,
             phone: state.phone,
             email: state.email,
             password: state.password,
             name: state.name
         };
-      Authentication.registration('http://localhost:7000/api/entry/register', obj);
+        Authentication.registration('http://localhost:7000/api/entry/register', obj);
     }
     return (
         <div>
             <div>
-                <div className="login-form">
+                <div className="registration-form">
                     <div className="form-group">
                         <h2>Registration</h2>
                     </div>
-                    <div className="form-group">
-                        <label >Type of User</label>
-                        <select className='form-control' onChange={commonHandler} value={state.typeOfUser} id="registrationTypeOfUser">
-                            <option value={typeOfUsers.USER}>Normal User</option>
-                            <option valur={typeOfUsers.TECHNICIAN}>Technician</option></select>                        </div>
-                    <div className="form-group">
-                        <label >Username</label>
-                        <input value={state.username} onChange={commonHandler} type="text" className="form-control" id="registrationUsername" aria-describedby="usernameHelp" />
+
+                    <div className='row'>
+                        <div className='col-md-6'>
+                            <div className="form-group">
+                                <label >Type of User</label>
+                                <select className='form-control' onChange={commonHandler} value={state.typeOfUser} id="registrationTypeOfUser">
+                                    <option value={typeOfUsers.USER}>Normal User</option>
+                                    <option value={typeOfUsers.TECHNICIAN}>Technician</option></select>                        </div>
+                            <div className="form-group">
+                                <label >Username</label>
+                                <input value={state.username} onChange={commonHandler} type="text" className="form-control" id="registrationUsername" aria-describedby="usernameHelp" />
+                            </div>
+                            <div className="form-group">
+                                <label >Email address</label>
+                                <input value={state.email} onChange={commonHandler} type="email" className="form-control" id="registrationEmail" aria-describedby="emailHelp" />
+                                <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone
+                                    else.</small>
+                            </div>
+
+                        </div>
+                        <div className='col-md-6'>
+                            <div className="form-group">
+                                <label >Password</label>
+                                <input value={state.password} onChange={commonHandler} type="password" className="form-control" id="registrationPassword" />
+                            </div>
+                            <div className="form-group">
+                                <label >Phone</label>
+                                <input value={state.phone} onChange={commonHandler} type="number" className="form-control" id="registrationPhone" aria-describedby="PhoneHelp" />
+                            </div>
+                            <div className="form-group">
+                                <label>Name</label>
+                                <input value={state.name} onChange={commonHandler} type="text" className="form-control" id="registrationName" aria-describedby="nameHelp" />
+                            </div>
+
+                        </div>
+
                     </div>
-                    <div className="form-group">
-                        <label >Email address</label>
-                        <input value={state.email} onChange={commonHandler} type="email" className="form-control" id="registrationEmail" aria-describedby="emailHelp" />
-                        <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone
-                            else.</small>
-                    </div>
-                    <div className="form-group">
-                        <label >Password</label>
-                        <input value={state.password} onChange={commonHandler} type="password" className="form-control" id="registrationPassword" />
-                    </div>
-                    <div className="form-group">
-                        <label >Phone</label>
-                        <input value={state.phone} onChange={commonHandler} type="number" className="form-control" id="registrationPhone" aria-describedby="PhoneHelp" />
-                    </div>
-                    <div className="form-group">
-                        <label>Name</label>
-                        <input value={state.name} onChange={commonHandler} type="text" className="form-control" id="registrationName" aria-describedby="nameHelp" />
-                    </div>
+
+
+
+
+
+
+
                     <button onClick={register} disabled={!state.valid} type="register" className="btn btn-primary">Register</button>
                     <hr />
                 </div>
