@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Authentication, TokenManager } from '../services';
+import { Authentication, TokenManager, API_BOOK } from '../services';
 const SignIn = function () {
-    const [errmsg, setErrMsg]= React.useState('');
+    const [errmsg, setErrMsg] = React.useState('');
+    const [userType, setUserType] = React.useState('USER');
     const [state, setState] = React.useState({
         username: '',
         password: '',
@@ -34,14 +35,24 @@ const SignIn = function () {
                 break;
         }
     }
+    const userTypeChangeHandler = (e) => {
+        if (e.target.checked) {
+            setUserType('TECHNICIAN');
+        }
+        else {
+            setUserType('USER');
+        }
+    }
     const signin = (e) => {
         e.preventDefault();
+        const loginURL = userType === 'USER' ? `${API_BOOK.ROOT}${API_BOOK.loginUser}` : `${API_BOOK.ROOT}${API_BOOK.loginTechnician}`;
+        console.log(loginURL);
         const loginObject = { username: state.username, password: state.password };
-        Authentication.signin('http://localhost:7000/api/entry/login', loginObject).then(function (responseObj) {
-            if(responseObj.status){
+        Authentication.signin(loginURL, loginObject).then(function (responseObj) {
+            if (responseObj.status) {
                 TokenManager.setToken(responseObj.data.token);
             }
-            else{
+            else {
                 setErrMsg('Login Failed');
             }
         })
@@ -65,7 +76,7 @@ const SignIn = function () {
                         <input onChange={commonHandler} type="password" className="form-control" id="signinPassword" />
                     </div>
                     <div className="form-group form-check">
-                        <input type="checkbox" className="form-check-input" id="exampleCheck1" />
+                        <input onChange={userTypeChangeHandler} type="checkbox" className="form-check-input" id="exampleCheck1" />
                         <label className="form-check-label">Technician</label>
                     </div>
                     <button disabled={!state.valid} type="submit" className="btn btn-primary">Submit</button>
