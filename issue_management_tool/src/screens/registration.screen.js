@@ -58,6 +58,7 @@ const Registration = function () {
 
     }
     const register = () => {
+        const registrationURL= state.typeOfUser=== typeOfUsers.TECHNICIAN?`${API_BOOK.ROOT}${API_BOOK.registerTechnician}`: `${API_BOOK.ROOT}${API_BOOK.registerUser}`; 
         const obj = {
             username: state.username,
             phone: state.phone,
@@ -65,7 +66,7 @@ const Registration = function () {
             password: state.password,
             name: state.name
         };
-        Authentication.registration('http://localhost:7000/api/entry/register', obj);
+        Authentication.registration(registrationURL, obj);
     }
     return (
         <div>
