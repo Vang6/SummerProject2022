@@ -82,6 +82,8 @@ const SignIn = function () {
                     <button disabled={!state.valid} type="submit" className="btn btn-primary">Submit</button>
                     <hr />
                     <Link to="/registration">Registration</Link>
+                    <Link to="/raise">Raise Issue</Link>
+
                 </form>
             </div>
 
