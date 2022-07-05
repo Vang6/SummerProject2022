@@ -13,7 +13,14 @@ const Raise = function () {
     severity: issueSeverity.HIGH
   });
   const checkValidity = (modfState) => {
-    if (modfState.heading && modfState.desc && modfState.category && modfState.dateOfCreation && modfState.status && modfState.owner && modfState.assignTo && modfState.severity) {
+    if (modfState.heading
+      && modfState.desc
+      && modfState.category
+      && modfState.dateOfCreation
+      && modfState.status
+      //&& modfState.owner
+      //&& modfState.assignTo
+      && modfState.severity) {
       modfState.valid = true;
     }
     else {
@@ -70,55 +77,59 @@ const Raise = function () {
   }
 
   const categoryOptions = Object.keys(issueCategory).map(function (key) {
-    return <option value={issueCategory[key]}>{issueCategory[key]}</option>
+    return <option key={key} value={issueCategory[key]}>{issueCategory[key]}</option>
   })
   const statusOptions = Object.keys(issueStatus).map(function (key) {
-    return <option value={issueStatus[key]}>{issueStatus[key]}</option>
+    return <option key={key} value={issueStatus[key]}>{issueStatus[key]}</option>
   })
   const severityOptions = Object.keys(issueSeverity).map(function (key) {
-    return <option value={issueSeverity[key]}>{issueSeverity[key]}</option>
+    return <option key={key} value={issueSeverity[key]}>{issueSeverity[key]}</option>
   })
+  const raiseRequest= (e) => {
+    e.preventDefault();
+    console.log(state);
+  }
   return (
     <div>
       <div className="container">
         <h3>Raise an Issue</h3>
-        <form>
+        <form onSubmit={raiseRequest}>
           <div className='row'>
             <div className='col-md-6'>
               <div className="form-group">
-                <label for="exampleFormControlInput1">Heading</label>
-                <input type="text" onChange={commonHandler} className="form-control" id="exampleFormControlInput1" placeholder="heading"></input>
+                <label>Heading</label>
+                <input type="text" onChange={commonHandler} className="form-control" id="issueHeading" value={state.heading} placeholder="heading"></input>
               </div>
               <div className="form-group">
-                <label for="exampleFormControlSelect1">Select Severity</label>
-                <select className="form-control" id="exampleFormControlSelect1">
+                <label>Select Severity</label>
+                <select className="form-control" onChange={commonHandler} value={state.severity} id="issueSeverity">
                   {severityOptions}
                 </select>
               </div>
               <div className="form-group">
-                <label for="exampleFormControlSelect1">Select Category</label>
-                <select className="form-control" id="exampleFormControlSelect1">
+                <label>Select Category</label>
+                <select className="form-control" id="issueCategory" onChange={commonHandler} value={state.category}>
                   {categoryOptions}
                 </select>
               </div>
               <div className="form-group">
-                <label for="exampleFormControlTextarea1">Describe Problem</label>
-                <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <label>Describe Problem</label>
+                <textarea onChange={commonHandler} value={state.desc} className="form-control" id="issueDesc" rows="3"></textarea>
               </div>
             </div>
             <div className='col-md-6'>
               <div className="form-group">
-                <label for="exampleFormControlSelect1">Set Status</label>
-                <select className="form-control" id="exampleFormControlSelect1">
+                <label>Set Status</label>
+                <select className="form-control" id="issueStatus" onChange={commonHandler} value={state.status}>
                   {statusOptions}
                 </select>
               </div>
               <div className="form-group">
-                <label for="exampleFormControlInput1">Date of Issue</label>
+                <label>Date of Issue {state.dateOfCreation}</label>
                 <input type="date" onChange={commonHandler} className="form-control" id="issueDateOfCreation" value={state.dateOfCreation} placeholder="date"></input>
               </div>
               <div className="form-group">
-                <button className="btn btn-primary">Raise</button>
+                <button disabled={!state.valid} className="btn btn-primary">Raise</button>
               </div>
             </div>
           </div>
