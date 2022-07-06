@@ -5,8 +5,10 @@ const HttpClient = {
         return new Promise(function (resolve, reject) {
             fetch(url, {
                 method: 'GET',
-                headers: [{ 'Content-type': 'application/json' },
-                { 'Authorisation': `Bearer ${token}` }]
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorisation': `Bearer ${token}`
+                }
             }).then((responseObj) => {
                 return responseObj.json();
             }).then((responseData) => {
@@ -20,16 +22,20 @@ const HttpClient = {
         const token = TokenManager.getToken();
         return new Promise(function (resolve, reject) {
             fetch(url, {
-                method: 'GET',
-                body: JSON.stringify(payload), 
-                headers: [{ 'Content-type': 'application/json' },
-                { 'Authorisation': `Bearer ${token}` }]
+                method: 'POST',
+                body: JSON.stringify(payload),
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorisation': `Bearer ${token}`
+                }
             }).then((responseObj) => {
+                console.log('1-then', responseObj);
                 return responseObj.json();
             }).then((responseData) => {
+                console.log('2-then', responseData);
                 resolve(responseData);
-            }).catch(() => {
-                reject();
+            }).catch((error) => {
+                reject(error);
             })
         });
     }

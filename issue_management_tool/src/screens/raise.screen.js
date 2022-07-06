@@ -1,5 +1,6 @@
 import React from 'react';
 import { issueCategory, issueStatus, issueSeverity } from '../constants';
+import { HttpClient, API_BOOK } from '../services';
 const Raise = function () {
 
   const [state, setState] = React.useState({
@@ -85,9 +86,21 @@ const Raise = function () {
   const severityOptions = Object.keys(issueSeverity).map(function (key) {
     return <option key={key} value={issueSeverity[key]}>{issueSeverity[key]}</option>
   })
-  const raiseRequest= (e) => {
+  const raiseRequest = (e) => {
     e.preventDefault();
-    console.log(state);
+    const payload = {
+      category: state.category,
+      dateOfCreation: state.dateOfCreation,
+      desc: state.desc,
+      heading: state.heading,
+      severity: state.severity,
+      status: state.status,
+    }
+    HttpClient.post(`${API_BOOK.ROOT}${API_BOOK.raiseIssue}`, payload).then(function(data){
+      console.log(data);    
+    }).catch(function(error){
+      console.log(error);
+    })
   }
   return (
     <div>
