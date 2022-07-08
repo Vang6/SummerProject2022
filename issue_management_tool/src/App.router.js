@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { SignIn, Raise, SignOut, Registration, Issues } from './screens';
+import { SignIn, Raise, SignOut, Registration, Issues, IssueUpdate } from './screens';
 
 const AppRouter = function () {
     return (
@@ -28,15 +28,19 @@ const AppRouter = function () {
 
                     <Route path="/raise" element={<Raise />} />
 
+                    <Route path="/issueupdate" element={<IssueUpdate/>} />
+
                     <Route path="/issues" element={<Issues />} />
 
                     <Route path="/signout" element={<SignOut />} />
 
                     <Route path="/registration" element={<Registration />} />
+
+
                 </Routes>
                 
             </BrowserRouter>
         </div>
     )
 }
-export default AppRouter
+export default AppRouter;

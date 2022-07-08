@@ -6,8 +6,8 @@ const HttpClient = {
             fetch(url, {
                 method: 'GET',
                 headers: {
-                    'Content-type': 'application/json',
-                    'Authorisation': `Bearer ${token}`
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 }
             }).then((responseObj) => {
                 return responseObj.json();
@@ -25,8 +25,8 @@ const HttpClient = {
                 method: 'POST',
                 body: JSON.stringify(payload),
                 headers: {
-                    'Content-type': 'application/json',
-                    'Authorisation': `Bearer ${token}`
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 }
             }).then((responseObj) => {
                 console.log('1-then', responseObj);
