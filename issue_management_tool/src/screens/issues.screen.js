@@ -1,6 +1,14 @@
 import React from 'react';
+import { HttpClient, API_BOOK } from '../services';
 const Issues= function(){
+  const[state, setState]= React.useState([]);
+  HttpClient.get(`${API_BOOK.ROOT}${API_BOOK.issues}`).then(function(data){
+    setState(data);
+  }).catch(function(error){
+
+  })
     return(
+
         <div>
         <div>
             <table class="table">
@@ -18,62 +26,22 @@ const Issues= function(){
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1001</td>
-                    <td>WiFi not working</td>
-                    <td>WiFi not working</td>
-                    <td>Technical</td>
-                    <td>1/05/2022</td>
-                    <td>Created</td>
-                    <td>Technician</td>
-                    <td>Medium</td>
-                    <td><button class="btn btn-primary">edit</button></td>
-                  </tr>
-                  <tr>
-                    <td>1002</td>
-                    <td>WiFi not working</td>
-                    <td>WiFi not working</td>
-                    <td>Technical</td>
-                    <td>1/05/2022</td>
-                    <td>Created</td>
-                    <td>Technician</td>
-                    <td>Medium</td>
-                    <td><button class="btn btn-primary">edit</button></td>
-                  </tr>
-                  <tr>
-                    <td>1003</td>
-                    <td>WiFi not working</td>
-                    <td>WiFi not working</td>
-                    <td>Technical</td>
-                    <td>1/05/2022</td>
-                    <td>Created</td>
-                    <td>Technician</td>
-                    <td>Medium</td>
-                    <td><button class="btn btn-primary">edit</button></td>
-                  </tr>
-                  <tr>
-                    <td>1004</td>
-                    <td>WiFi not working</td>
-                    <td>WiFi not working</td>
-                    <td>Technical</td>
-                    <td>1/05/2022</td>
-                    <td>Created</td>
-                    <td>Technician</td>
-                    <td>Medium</td>
-                    <td><button class="btn btn-primary">edit</button></td>
-                  </tr>
-                  <tr>
-                    <td>1005</td>
-                    <td>WiFi not working</td>
-                    <td>WiFi not working</td>
-                    <td>Technical</td>
-                    <td>1/05/2022</td>
-                    <td>Created</td>
-                    <td>Technician</td>
-                    <td>Medium</td>
-                    <td><button class="btn btn-primary">edit</button></td>
-                  </tr>
+                  {
+                    state.map(function(issue){
+                      return <tr>
+                        <td>{issue._id}</td>
+                        <td>{issue.heading}</td>
+                        <td>{issue.desc}</td>
+                        <td>{issue.category}</td>
+                        <td>{issue.dateOfCreation}</td>
+                        <td>{issue.status}</td>
+                        <td>{issue.owner}</td>
+                        <td>{issue.severity}</td>
+                        <td><button></button></td>
+                      </tr>
 
+                    })
+                  }
                 </tbody>
               </table>
         </div>

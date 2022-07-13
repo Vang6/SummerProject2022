@@ -4,6 +4,7 @@ const API_BOOK= {
     loginTechnician: 'entry/login/technician',
     registerUser: 'entry/register',
     registerTechnician: 'entry/register/technician',
-    raiseIssue: 'track/issues/create'
+    raiseIssue: 'track/issues/create',
+    issues: 'track/issues'
 }
 export default API_BOOK;

@@ -1,6 +1,17 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { SignIn, Raise, SignOut, Registration, Issues, IssueUpdate } from './screens';
+import { TokenManager } from './services';
+
+const GenericScreenRenderer= (props) => {
+    const authenticated= TokenManager.getToken();
+    if(authenticated){
+        return <>{props.component}</>    
+    }
+    else{
+        window.location.href= '/';
+    }
+};
 
 const AppRouter = function () {
     return (
@@ -26,17 +37,15 @@ const AppRouter = function () {
                 <Routes>
                     <Route path="/" element={<SignIn />} />
 
-                    <Route path="/raise" element={<Raise />} />
+                    <Route path="/raise" element={<GenericScreenRenderer component={<Raise/>}/>} />
 
-                    <Route path="/issueupdate" element={<IssueUpdate/>} />
+                    <Route path="/issueupdate" element={<GenericScreenRenderer component={<IssueUpdate/>}/>} />
 
-                    <Route path="/issues" element={<Issues />} />
+                    <Route path="/issues" element={<GenericScreenRenderer component={<Issues/>}/>} />
 
                     <Route path="/signout" element={<SignOut />} />
 
                     <Route path="/registration" element={<Registration />} />
-
-
                 </Routes>
                 
             </BrowserRouter>
