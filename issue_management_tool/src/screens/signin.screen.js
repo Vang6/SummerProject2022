@@ -1,7 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Authentication, TokenManager, API_BOOK } from '../services';
+import preloader from './preloader';
 const SignIn = function () {
+    const [inProgress, setInProgress]= React.useState(false);
+    const navigate= useNavigate();
     const [errmsg, setErrMsg] = React.useState('');
     const [userType, setUserType] = React.useState('USER');
     const [state, setState] = React.useState({
@@ -44,6 +47,7 @@ const SignIn = function () {
         }
     }
     const signin = (e) => {
+        setInProgress(true);
         e.preventDefault();
         const loginURL = userType === 'USER' ? `${API_BOOK.ROOT}${API_BOOK.loginUser}` : `${API_BOOK.ROOT}${API_BOOK.loginTechnician}`;
         console.log(loginURL);
@@ -51,15 +55,19 @@ const SignIn = function () {
         Authentication.signin(loginURL, loginObject).then(function (responseObj) {
             if (responseObj.status) {
                 TokenManager.setToken(responseObj.data.token);
+                setInProgress(false);
+                navigate('/issues');
             }
             else {
                 setErrMsg('Login Failed');
+                setInProgress(false);
             }
         })
     };
     return (
         <div>
-            <div className="login-form">
+            {inProgress && <preloader></preloader>} 
+            {!inProgress && <div className="login-form">
                 <span className="batch text-danger">{errmsg}</span>
                 <form onSubmit={signin}>
                     <div className="form-group">
@@ -84,7 +92,7 @@ const SignIn = function () {
                     <Link to="/registration">Registration</Link>
 
                 </form>
-            </div>
+            </div>}
 
         </div>)
 };
